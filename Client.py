@@ -83,7 +83,7 @@ class Client:
 		Label(self.application_layer_frame, text="Application Layer (RTSP)").pack()
   
 		self.transport_layer_frame = Frame(self.master, bd=2, relief=GROOVE)
-		self.transport_layer_frame.grid(row=3, column=0, columnspan=4, padx=2, pady=2, sticky=W+E)
+		self.transport_layer_frame.grid(row=3, column=0, columnspan=7, padx=2, pady=2, sticky=W+E)
 		Label(self.transport_layer_frame, text="Transport Layer (TCP)").pack()
   
 		self.network_layer_frame = Frame(self.master, bd=2, relief=GROOVE)
@@ -96,6 +96,11 @@ class Client:
 		self.transport_packet_label = Label(self.transport_layer_frame, text="", anchor=W, justify=LEFT)
 		self.transport_packet_label.pack(fill=BOTH)
   
+		self.rtp_packet_label = Label(self.transport_layer_frame, text="", anchor=W, justify=LEFT)
+		self.rtp_packet_label.pack(fill=BOTH)
+
+		self.transport_packet_label.pack(fill=BOTH)
+  
 		self.network_packet_label = Label(self.network_layer_frame, text="", anchor=W, justify=LEFT)
 		self.network_packet_label.pack(fill=BOTH)
   	
@@ -104,6 +109,7 @@ class Client:
 		if layer == "application":self.application_packet_label.config(text=data)
 		if layer == "transport":self.transport_packet_label.config(text=data)
 		if layer == "network":self.network_packet_label.config(text=data)
+		if layer == "rtp":self.rtp_packet_label.config(text=data)
   
 	def exitClient(self):
 		"""Teardown button handler."""
@@ -140,7 +146,7 @@ class Client:
 					if currFrameNbr > self.frameNbr: # Discard the late packet
 						self.frameNbr = currFrameNbr
 						self.updateMovie(self.writeFrame(rtpPacket.getPayload()))
-						self.updateVisualization("network", f"RTP Packet: SeqNum={currFrameNbr}")  # Update visualization
+						self.updateVisualization("rtp", f"RTP Packet: SeqNum={currFrameNbr}")  # Update visualization
 			except:
 				# Stop listening upon requesting PAUSE or TEARDOWN
 				if self.playEvent.isSet(): 
@@ -323,6 +329,7 @@ class Client:
 		try:
 			self.rtpSocket.bind((self.serverAddr,self.rtpPort))   # WATCH OUT THE ADDRESS FORMAT!!!!!  rtpPort# should be bigger than 1024
 			#self.rtpSocket.listen(5)
+			self.updateVisualization("network", f"RTP Packet: Server Address={self.serverAddr}")  # Update visualization
 			print ("Bind RtpPort Success")
 		except:
 			tkMessageBox.showwarning('Unable to Bind', 'Unable to bind PORT=%d' %self.rtpPort)
