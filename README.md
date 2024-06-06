@@ -1,7 +1,7 @@
 # Real-time Streaming Protocol (RTSP)
 
 
-> RTSP is a protocol for controlling servers that stream media over the Internet. It helps set up and manage connections between devices for audio and video streaming. With RTSP, media players and servers can talk to each other easily, so users can play, pause, change volume, and do other actions while streaming. 
+> RTSP is a protocol for controlling servers that stream media over the Internet. It helps set up and manage connections between devices for audio and video streaming. With RTSP, media players and servers can talk to each other easily, so users can play, pause, change volume, and do other actions while streaming. For more information [RFC](https://www.ietf.org/rfc/rfc2326.txt).
 
 
 ####  How Does RTSP Work?
@@ -25,3 +25,27 @@ RTSP can send these commands from the client to the server to negotiate and cont
 - Record: Starts recording the media stream.
 - Teardown: Ends the session and stops all media streams.
 - Redirect: Tells the client to connect to another server by giving a new URL for the client to use.
+- 
+####  Installation
+
+To run the RTSP on your local development environment, follow these steps:
+
+1. Make sure you have [Python](https://www.python.org/downloads/) installed on your computer.
+
+2. Clone this repository to your local machine.
+
+   ```bash
+   git clone https://github.com/rani-abha/RTSP_Backend.git
+3. In terminal run 
+    ```sh
+    python Server.py
+    ```
+    serverport : the port you want to run your server on.
+4. Then, run:
+    ```sh
+    python ClientLauncher.py IPAdd 6789 clientport movie.Mjpeg 
+    ```
+    IPAdd : the IP Address (use 127.0.0.1 if running locally)
+    serverport : the server's port.
+If you are on windows run start.bat
+ 
